@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Happy birthday!Wu fan.</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<style>
+#main{
+	position:absolute;
+	top:0px;
+	left:0px;
+	border:0px #ff0000 solid;
+	text-align:center;
+	display: flex;
+	opacity:0.5;
+	justify-content:center;
+	align-items:Center;
+}
+		</style>
+		<script>
+function Od(string,size,color,type,time,is_clear,p){
+	this.string=string;
+	this.size=size;
+	this.color=color;
+	this.type=type;
+	this.time=time;
+	this.body="";
+	this.is_clear=is_clear;
+	this.p=p;
+}
+var list=[];
+var showing=false;
+var tt=0;
+var NO=-1,ALP=0,HEI=1;
+function ani(e,box){
+	if(tt>=e.time && e.is_clear){
+		box.innerHTML="";
+	}
+	switch(e.type){
+		case NO:
+		break;
+		case ALP:
+		var t1=3,t2=1;
+		//e.o_alpha=(tt==0?e.body.style.opacity:e.body.style.opacity);
+		if(tt<=t1){
+			e.body.style.opacity=1*tt/(t1);
+		}
+		if(tt>=e.time-t2 && e.is_clear){
+			box.style.opacity=1-(tt+t2-e.time)/(t2);
+		}
+		break;
+		case HEI:
+		var t1=3,t2=1;
+		//e.o_height=(tt==0?e.szie.substring(0,e.size.length-2):e.o_height);
+		if(tt<=t1){
+			e.body.style.height=20*tt/(t1)+"px";
+			e.body.style.opacity=1*tt/(t1);
+		}
+		if(tt>=e.time-t2 && e.is_clear){
+			box.style.opacity=1-(tt+t2-e.time)/(t2);
+		}
+		break;
+		
+	}
+}
+function na(){
+	//alert("Code Normal");
+	var a=document.getElementById("main");
+	a.style.height=innerHeight+"px";
+	a.style.width=innerWidth+"px";
+}
+function show(e){
+	var a=e;
+	var listp=new Array(list.length+1);
+	for(var i=0;i<list.length;i++){
+		listp[i]=list[i];
+	}
+	listp[list.length]=a;
+	list=listp;
+
+}
+var pp=0;
+function update(){
+	
+	if(tt>=list[0].time){
+		var listp=new Array(list.length-1);
+		for(var i=0;i<listp.length;i++){ 
+			listp[i]=list[i+1];
+		}
+		list=listp;
+		tt=0;
+		
+	}
+	var e=list[0];
+	var a=document.getElementById("in");
+	if(tt==0){
+		a.style.opacity=1;
+	}
+	
+	
+	//if(tt==0 && e.is_clear){
+		//a.innerHTML="";
+	//}
+	if(tt==0 && pp>0){
+		}//如果元素p不过0，则加载p个元素，pp=p，并且在pp减为0前不使用下面代码刷新元素。
+	if(tt==0 && pp==0){
+		if(e.p>0){
+			//pp=p;
+			
+		}
+		var c=document.createElement("div");
+		c.style.width="100%";
+		c.style.textAlign="center";
+		c.style.color=e.color;
+		c.style.fontSize=e.size;
+		c.innerHTML=e.string;
+		e.body=c;
+		a.appendChild(c);
+		//a.appendChild(document.createElement("br"));
+	}
+	
+	tt+=0.1;
+	ani(e,a);
+	
+}
+		</script>
+	</head>
+	<body>
+		<div  id="main"><div id="in"></div></div>
+		<script>
+na();
+//function Od(string,size,color,type,time,is_clear,p)
+show(new Od("Hello","40px","#ff0000",ALP,10,false,1));
+show(new Od("Hello1","20px","#000000",ALP,6,true,0));
+show(new Od("Hello223","50px","#ff00ff",HEI,14,true,0));
+show(new Od("end","25px","#00ff00",ALP,23,true,0));
+
+setInterval("update();",30);
+
+		</script>
+
+	</body>
+</html>
