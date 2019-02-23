@@ -1,143 +1,79 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Happy birthday!Wu fan.</title>
-		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<style>
-#main{
-	position:absolute;
-	top:0px;
-	left:0px;
-	border:0px #ff0000 solid;
-	text-align:center;
-	display: flex;
-	opacity:0.5;
-	justify-content:center;
-	align-items:Center;
+<html> 	<head>  	<title>Happy birthday!Wu fan.</title>  	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  	<style>
+#main{ 	position:absolute; 	top:0px; 	left:0px; 	border:0px #ff0000 solid; 	text-align:center; 	display: flex; 	opacity:0.5; 	justify-content:center; 	align-items:Center;
+}  	</style>  	<script>
+/*
+transform: rotate(40deg); -o-transform: rotate(40deg); -webkit-transform: rotate(40deg); -moz-transform: rotate(40deg); 
+*/
+function abc(){ 	var p=parseInt(99*Math.random())+""; 	if(p.length==1){  	p="0"+p; 	} 	if(p.length==0){  	p="00"+p; 	} 	return p;
 }
-		</style>
-		<script>
-function Od(string,size,color,type,time,is_clear,p){
-	this.string=string;
-	this.size=size;
-	this.color=color;
-	this.type=type;
-	this.time=time;
-	this.body="";
-	this.is_clear=is_clear;
-	this.p=p;
+function Fl(){ 	this.x=0; 	this.y=0; 	this.s=0; 	this.r=0; 	this.color=0; 	this.e=0; 	this.speed=0; 	this.rs=0;
+} 
+var fsize=5;
+var bits=new Array(fsize); 
+function Od(string,size,color,type,time,is_clear,p){ 	this.string=string; 	this.size=size; 	this.color=color; 	this.type=type; 	this.time=time; 	this.body=""; 	this.is_clear=is_clear; 	this.p=p;
 }
 var list=[];
 var showing=false;
 var tt=0;
 var NO=-1,ALP=0,HEI=1;
-function ani(e,box){
-	if(tt>=e.time && e.is_clear){
-		box.innerHTML="";
-	}
-	switch(e.type){
-		case NO:
-		break;
-		case ALP:
-		var t1=3,t2=1;
-		//e.o_alpha=(tt==0?e.body.style.opacity:e.body.style.opacity);
-		if(tt<=t1){
-			e.body.style.opacity=1*tt/(t1);
-		}
-		if(tt>=e.time-t2 && e.is_clear){
-			box.style.opacity=1-(tt+t2-e.time)/(t2);
-		}
-		break;
-		case HEI:
-		var t1=3,t2=1;
-		//e.o_height=(tt==0?e.szie.substring(0,e.size.length-2):e.o_height);
-		if(tt<=t1){
-			e.body.style.height=20*tt/(t1)+"px";
-			e.body.style.opacity=1*tt/(t1);
-		}
-		if(tt>=e.time-t2 && e.is_clear){
-			box.style.opacity=1-(tt+t2-e.time)/(t2);
-		}
-		break;
-		
-	}
+function ani(e,box){ 	if(tt>=e.time && e.is_clear){  	box.innerHTML=""; 	} 	switch(e.type){  	case NO:  	e.body.style.opacity=1;  	break;  	case ALP:  	var t1=3,t2=1;  	//e.o_alpha=(tt==0?e.body.style.opacity:e.body.style.opacity);  	if(tt<=t1){   	e.body.style.opacity=1*tt/(t1);  	}  	if(tt>=e.time-t2 && e.is_clear){   	box.style.opacity=1-(tt+t2-e.time)/(t2);  	}  	break;  	case HEI:  	var t1=4,t2=1;     	if(tt<=t1){   	e.body.style.opacity=1;   	e.body.innerHTML=e.string.substring(0,parseInt(e.string.length*tt/t1+1))+" ";  	}  	if(tt>=e.time-t2 && e.is_clear){   	box.style.opacity=1-(tt+t2-e.time)/(t2);  	}  	break;    	}
 }
-function na(){
-	//alert("Code Normal");
-	var a=document.getElementById("main");
-	a.style.height=innerHeight+"px";
-	a.style.width=innerWidth+"px";
+function na(){ 	//alert("Code Normal"); 	var a=document.getElementById("main"); 	a.style.height=innerHeight+"px"; 	a.style.width=innerWidth+"px";
 }
-function show(e){
-	var a=e;
-	var listp=new Array(list.length+1);
-	for(var i=0;i<list.length;i++){
-		listp[i]=list[i];
-	}
-	listp[list.length]=a;
-	list=listp;
-
+function show(e){ 	var a=e; 	var listp=new Array(list.length+1); 	for(var i=0;i<list.length;i++){  	listp[i]=list[i]; 	} 	listp[list.length]=a; 	list=listp; 
 }
-var pp=0;
-function update(){
-	
-	if(tt>=list[0].time){
-		var listp=new Array(list.length-1);
-		for(var i=0;i<listp.length;i++){ 
-			listp[i]=list[i+1];
-		}
-		list=listp;
-		tt=0;
-		
-	}
-	var e=list[0];
-	var a=document.getElementById("in");
-	if(tt==0){
-		a.style.opacity=1;
-	}
-	
-	
-	//if(tt==0 && e.is_clear){
-		//a.innerHTML="";
-	//}
-	if(tt==0 && pp>0){
-		}//如果元素p不过0，则加载p个元素，pp=p，并且在pp减为0前不使用下面代码刷新元素。
-	if(tt==0 && pp==0){
-		if(e.p>0){
-			//pp=p;
-			
-		}
-		var c=document.createElement("div");
-		c.style.width="100%";
-		c.style.textAlign="center";
-		c.style.color=e.color;
-		c.style.fontSize=e.size;
-		c.innerHTML=e.string;
-		e.body=c;
-		a.appendChild(c);
-		//a.appendChild(document.createElement("br"));
-	}
-	
-	tt+=0.1;
-	ani(e,a);
-	
+var tp=0;
+function update(){ 	for(var i=0;i<fsize;i++){  	var a=bits[i];  	a.x-=a.speed/3;  	a.y+=a.speed;  	a.r+=a.rs;  	if(a.x<-a.s || a.y>innerHeight+a.s){   	a.s=30*Math.random();   	a.r=360*Math.random();   	a.speed=3+5*Math.random();   	a.rs=40*Math.random()-20;   	a.color="#ffaadd";   	if(Math.random()>0.49999){    	a.y=innerHeight*Math.random();    	a.x=innerWidth;   	}else{    	a.x=innerWidth*Math.random();    	a.y=-a.s;   	}      	}     	a.e.style.left=a.x+"px";  	a.e.style.top=a.y+"px";  	a.e.style.color=a.color;  	a.e.style.fontSize=a.s+"px";  	a.e.style.transform="rotate("+a.r+"deg)";  	a.e.style.oTransform="rotate("+a.r+"deg)";  	a.e.style.webkitTransform="rotate("+a.r+"deg)";  	a.e.style.mozTransform="rotate("+a.r+"deg)"; 	} 	if(tt>=list[0].time){  	var listp=new Array(list.length-1);  	for(var i=0;i<listp.length;i++){    	listp[i]=list[i+1];  	}  	list=listp;  	tt=0;    	} 	var e=list[0]; 	var a=document.getElementById("in"); 	if(tt==0){  	a.style.opacity=1; 	}   	if(tp>0 && tt==0){  	tp--; 	} 	if(e.p>0 && tt==0){  	tp=e.p;  	for(var i=0;i<e.p;i++){   	var c=document.createElement("div");   	c.style.width="100%";   	c.style.opacity=0;   	//c.style.border="1px #ff0000 solid";   	c.style.textAlign="center";   	c.style.color=list[i].color;   	c.style.fontSize=list[i].size;   	c.innerHTML=list[i].string;   	list[i].body=c;   	a.appendChild(c);  	} 	}     	if(tt==0 && tp==0){  	var c=document.createElement("div");  	c.style.width="100%";  	c.style.textAlign="center";  	c.style.color=e.color;  	c.style.fontSize=e.size;  	//c.style.border="1px #ff0000 solid";  	c.innerHTML=e.string;  	e.body=c;  	a.appendChild(c);  	//a.appendChild(document.createElement("br")); 	} 	tt+=0.1; 	ani(e,a);  
+}  	</script> 	</head> 	<body ontouchmove="event.preventDefault();">  	<div  id="main"><div id="in"></div></div>  	<script>
+for(var i=0;i<fsize;i++){ 	var a=new Fl(); 	a.x=innerWidth*Math.random(); 	a.y=innerHeight*Math.random(); 	a.s=30*Math.random(); 	a.r=360*Math.random(); 	a.speed=3+5*Math.random(); 	a.rs=40*Math.random()-20; 	a.color="#ffaadd"; 	a.e=document.createElement("div"); 	a.e.innerHTML="🌸"; 	a.e.style.position="absolute"; 	a.e.style.left=a.x+"px"; 	a.e.style.top=a.y+"px"; 	a.e.style.color=a.color; 	a.e.style.fontSize=a.s+"px"; 	a.e.style.transform="rotate("+a.r+"deg)"; 	a.e.style.oTransform="rotate("+a.r+"deg)"; 	a.e.style.webkitTransform="rotate("+a.r+"deg)"; 	a.e.style.mozTransform="rotate("+a.r+"deg)"; 	bits[i]=a; 	document.body.appendChild(a.e);
 }
-		</script>
-	</head>
-	<body>
-		<div  id="main"><div id="in"></div></div>
-		<script>
 na();
 //function Od(string,size,color,type,time,is_clear,p)
-show(new Od("Hello","40px","#ff0000",ALP,10,false,1));
-show(new Od("Hello1","20px","#000000",ALP,6,true,0));
-show(new Od("Hello223","50px","#ff00ff",HEI,14,true,0));
-show(new Od("end","25px","#00ff00",ALP,23,true,0));
-
-setInterval("update();",30);
-
-		</script>
-
-	</body>
+show(new Od("吴凡同学","40px","#000000",ALP,4,false,2));
+show(new Od("生日快乐","30px","#ff7899",ALP,6,true,0));
+show(new Od("呵，这个贺卡来的有点晚~","18px","#444444",ALP,4,0,2));
+show(new Od("因为制作还是比较麻烦的(→_→)。","18px","#444444",ALP,7,1,0));
+show(new Od("......","24px","#444444",NO,3,true,0));
+show(new Od("2019，你度过了18岁的生日。","18px","#444444",ALP,7,1,0));
+show(new Od("(嗯......不知道要说什么。)","18px","#444444",NO,4,1,0));
+show(new Od("亲爱的吴凡同学，","20px","#44444",ALP,4,0,9));
+show(new Od("你是一个","13px","#444444",ALP,3,0,0));
+show(new Od("智慧","13px","#ff4477",HEI,3,0,0));
+show(new Od("美丽","13px","#ff4477",HEI,3,0,0));
+show(new Od("独立","13px","#ff4477",HEI,3,0,0));
+show(new Od("能干","13px","#ff4477",HEI,3,0,0));
+show(new Od("天真","13px","#ff4477",HEI,3,0,0));
+show(new Od("可爱","13px","#ff4477",HEI,3,0,0));
+show(new Od("的女孩。","18px","#444444",ALP,9,1,0));
+show(new Od("18岁的生日，<br \/>你收到我的礼物。","18px","#444444",ALP,8,1,0));
+show(new Od("(说实话，我认认真真准备的是这张电子贺卡。)","18px","#444444",NO,7,1,0));
+show(new Od("你我都是成年人了。","18px","#444444",ALP,4,0,2));
+show(new Od("有些话我要和你说清楚!","18px","#444444",ALP,7,1,0));
+show(new Od("......","35px","#444444",NO,5,1,0));
+show(new Od("减肥这件事是不能半途而废的。","18px","#444444",NO,4,1,0));
+show(new Od("<image width=\"200\" src=\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550955150042&di=76fd03c52648a8c45433ff58a942c72f&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201601%2F24%2F20160124105056_aZExU.thumb.700_0.jpeg\" \/> ","18px","#444444",NO,4,1,0));
+show(new Od("开玩笑的。","35px","#444444",NO,6,1,0));
+show(new Od("你要照顾好自己，保护好自己。","18px","#444444",ALP,4,0,2));
+show(new Od("好好走完高三剩下的一百多天。","18px","#444444",ALP,5,1,0));
+show(new Od("我相信你的未来是美好的，精彩的。","18px","#444444",ALP,5,0,2));
+show(new Od("你有潜力变得更优秀。","18px","#444444",ALP,5,1,0));
+show(new Od("。。。。。","25px","#444444",ALP,4,1,0));
+show(new Od("。。。","25px","#444444",ALP,4,1,0));
+show(new Od("好的，我文才已尽。<br \/>(语文素养就这样)","18px","#444444",NO,6,1,0));
+show(new Od("你觉得我还会说什么。","18px","#000000",ALP,7,1,0));
+show(new Od("呵","100px","#000000",NO,4,1,0));
+show(new Od("我心里没点B数么?","18px","#000000",ALP,6,1,0));
+show(new Od("Of course not!","18px","#000000",ALP,7,2,0));
+show(new Od("There is just you.","25px","#000000",ALP,6,1,0));
+show(new Od("<image width=\"300\" src=\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550955150042&di=76fd03c52648a8c45433ff58a942c72f&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201601%2F24%2F20160124105056_aZExU.thumb.700_0.jpeg\" \/> ","18px","#444444",NO,5,1,0)); 
+show(new Od("好了。","18px","#444444",ALP,5,1,0));
+show(new Od("这个网页是公开的。","14px","#444444",ALP,4,0,2));
+show(new Od("有些话不能在这里说的。","14px","#444444",ALP,6,1,0)); 
+show(new Od("希望你天天开心。","18px","#000000",ALP,10,false,3));
+show(new Od("吴凡同学","40px","#000000",ALP,6,false,0));
+show(new Od("--by 许浩扬","13px","#666666",HEI,14,true));
+show(new Od("好累。。好困。。。","25px","#444444",ALP,7,1,0));
+show(new Od("end","65px","#ffaadd",ALP,6,false)); 
+setInterval("update();",30);   	</script>  	</body>
 </html>
