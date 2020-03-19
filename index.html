@@ -1,276 +1,46 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>-----</title>
-		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<style>
-#main{
-	position:absolute;
-	top:0px;
-	left:0px;
-	border:0px #ff0000 solid;
-	text-align:center;
-	display: flex;
-	opacity:0.5;
-	justify-content:center;
-	align-items:Center;
-}
-		</style>
-		<script>
-/*
-transform: rotate(40deg); -o-transform: rotate(40deg); -webkit-transform: rotate(40deg); -moz-transform: rotate(40deg); 
-*/
-function abc(){
-	var p=parseInt(99*Math.random())+"";
-	if(p.length==1){
-		p="0"+p;
-	}
-	if(p.length==0){
-		p="00"+p;
-	}
-	return p;
-}
-function Fl(){
-	this.x=0;
-	this.y=0;
-	this.s=0;
-	this.r=0;
-	this.color=0;
-	this.e=0;
-	this.speed=0;
-	this.rs=0;
-}
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title> 搜索 </title>
+        <link rel="stylesheet" href="css/a.css" type="text/css" />
+        <script src="js/background.js"></script>
+        <script src="js/head.js"></script>
+        <script src="js/infor.js"></script>
+        <script src="js/animation_extra.js"></script>
+        <script src="js/head2.js"></script>
+    </head>
+    <body>
+        <p id="time"> &nbsp;####&nbsp;></p>
+        <div id="search-box">
+            <div id="logo-box">
+                <image id="logo" src="image/logo.png" />
+            </div>
+            <div id="search-box1" onmouseover="s_n = true;" onmouseout="s_n = false;">
+                <input id="input" value="输入关键词" onclick="firstClick();" onkeydown="key();" />
+                <image id="clear" src="image/clear.png" onclick = "clearInput();" />
+                <image id="search" src="image/search.png" onclick="searchInput();" />
+            </div>
+        </div>
+        
+        <p id="creator"> &nbsp;制作：许浩扬&nbsp; </p>
 
-var fsize=5;
-var bits=new Array(fsize);
-
-function Od(string,size,color,type,time,is_clear,p){
-	this.string=string;
-	this.size=size;
-	this.color=color;
-	this.type=type;
-	this.time=time;
-	this.body="";
-	this.is_clear=is_clear;
-	this.p=p;
-}
-var list=[];
-var showing=false;
-var tt=0;
-var NO=-1,ALP=0,HEI=1;
-function ani(e,box){
-	if(tt>=e.time && e.is_clear){
-		box.innerHTML="";
-	}
-	switch(e.type){
-		case NO:
-		e.body.style.opacity=1;
-		break;
-		case ALP:
-		var t1=3,t2=1;
-		//e.o_alpha=(tt==0?e.body.style.opacity:e.body.style.opacity);
-		if(tt<=t1){
-			e.body.style.opacity=1*tt/(t1);
-		}
-		if(tt>=e.time-t2 && e.is_clear){
-			box.style.opacity=1-(tt+t2-e.time)/(t2);
-		}
-		break;
-		case HEI:
-		var t1=4,t2=1;
-		
-		if(tt<=t1){
-			e.body.style.opacity=1;
-			e.body.innerHTML=e.string.substring(0,parseInt(e.string.length*tt/t1+1))+" ";
-		}
-		if(tt>=e.time-t2 && e.is_clear){
-			box.style.opacity=1-(tt+t2-e.time)/(t2);
-		}
-		break;
-		
-	}
-}
-function na(){
-	//alert("Code Normal");
-	var a=document.getElementById("main");
-	a.style.height=innerHeight+"px";
-	a.style.width=innerWidth+"px";
-}
-function show(e){
-	var a=e;
-	var listp=new Array(list.length+1);
-	for(var i=0;i<list.length;i++){
-		listp[i]=list[i];
-	}
-	listp[list.length]=a;
-	list=listp;
-
-}
-var tp=0;
-function update(){
-	for(var i=0;i<fsize;i++){
-		var a=bits[i];
-		a.x-=a.speed/3;
-		a.y+=a.speed;
-		a.r+=a.rs;
-		if(a.x<-a.s || a.y>innerHeight+a.s){
-			a.s=30*Math.random();
-			a.r=360*Math.random();
-			a.speed=3+5*Math.random();
-			a.rs=40*Math.random()-20;
-			a.color="#ffaadd";
-			if(Math.random()>0.49999){
-				a.y=innerHeight*Math.random();
-				a.x=innerWidth;
-			}else{
-				a.x=innerWidth*Math.random();
-				a.y=-a.s;
-			}
-			
-		}
-		
-		a.e.style.left=a.x+"px";
-		a.e.style.top=a.y+"px";
-		a.e.style.color=a.color;
-		a.e.style.fontSize=a.s+"px";
-		a.e.style.transform="rotate("+a.r+"deg)";
-		a.e.style.oTransform="rotate("+a.r+"deg)";
-		a.e.style.webkitTransform="rotate("+a.r+"deg)";
-		a.e.style.mozTransform="rotate("+a.r+"deg)";
-	}
-	if(tt>=list[0].time){
-		var listp=new Array(list.length-1);
-		for(var i=0;i<listp.length;i++){ 
-			listp[i]=list[i+1];
-		}
-		list=listp;
-		tt=0;
-		
-	}
-	var e=list[0];
-	var a=document.getElementById("in");
-	if(tt==0){
-		a.style.opacity=1;
-	}
-	
-	if(tp>0 && tt==0){
-		tp--;
-	}
-	if(e.p>0 && tt==0){
-		tp=e.p;
-		for(var i=0;i<e.p;i++){
-			var c=document.createElement("div");
-			c.style.width="100%";
-			c.style.opacity=0;
-			//c.style.border="1px #ff0000 solid";
-			c.style.textAlign="center";
-			c.style.color=list[i].color;
-			c.style.fontSize=list[i].size;
-			c.innerHTML=list[i].string;
-			list[i].body=c;
-			a.appendChild(c);
-		}
-	}
-	
-	
-	if(tt==0 && tp==0){
-		var c=document.createElement("div");
-		c.style.width="100%";
-		c.style.textAlign="center";
-		c.style.color=e.color;
-		c.style.fontSize=e.size;
-		//c.style.border="1px #ff0000 solid";
-		c.innerHTML=e.string;
-		e.body=c;
-		a.appendChild(c);
-		//a.appendChild(document.createElement("br"));
-	}
-	tt+=0.1;
-	ani(e,a);
-	
-}
-		</script>
-	</head>
-	<body ontouchmove="event.preventDefault();">
-		<div  id="main"><div id="in"></div></div>
-		<script>
-for(var i=0;i<fsize;i++){
-	var a=new Fl();
-	a.x=innerWidth*Math.random();
-	a.y=innerHeight*Math.random();
-	a.s=30*Math.random();
-	a.r=360*Math.random();
-	a.speed=3+5*Math.random();
-	a.rs=40*Math.random()-20;
-	a.color="#ffaadd";
-	a.e=document.createElement("div");
-	a.e.innerHTML="🇨🇳";
-	a.e.style.position="absolute";
-	a.e.style.left=a.x+"px";
-	a.e.style.top=a.y+"px";
-	a.e.style.color=a.color;
-	a.e.style.fontSize=a.s+"px";
-	a.e.style.transform="rotate("+a.r+"deg)";
-	a.e.style.oTransform="rotate("+a.r+"deg)";
-	a.e.style.webkitTransform="rotate("+a.r+"deg)";
-	a.e.style.mozTransform="rotate("+a.r+"deg)";
-	bits[i]=a;
-	document.body.appendChild(a.e);
-}
-na();
-//function Od(string,size,color,type,time,is_clear,p)
-show(new Od("1","40px","#000000",ALP,4,false,2));
-show(new Od("2","30px","#ff7899",ALP,6,true,0));
-show(new Od("3","18px","#444444",ALP,4,0,2));
-show(new Od("4","18px","#444444",ALP,7,1,0));
-show(new Od("......","24px","#444444",NO,3,true,0));
-show(new Od("5","18px","#444444",ALP,7,1,0));
-show(new Od("6","18px","#444444",NO,4,1,0));
-show(new Od("7","20px","#444444",ALP,4,0,9));
-show(new Od("8","13px","#444444",ALP,3,0,0));
-show(new Od("9","13px","#ff4477",HEI,3,0,0));
-show(new Od("10","13px","#ff4477",HEI,3,0,0));
-show(new Od("1","13px","#ff4477",HEI,3,0,0));
-show(new Od("2","13px","#ff4477",HEI,3,0,0));
-show(new Od("3","13px","#ff4477",HEI,3,0,0));
-show(new Od("4","13px","#ff4477",HEI,3,0,0));
-show(new Od("5","18px","#444444",ALP,9,1,0));
-show(new Od("yuuiu<br \/>uiii","18px","#444444",ALP,8,1,0));
-show(new Od("tt","18px","#444444",NO,7,1,0));
-show(new Od("6","18px","#444444",ALP,4,0,2));
-show(new Od("7","18px","#444444",ALP,7,1,0));
-show(new Od("......","35px","#444444",NO,5,1,0));
-show(new Od("6。","18px","#444444",NO,4,1,0));
-show(new Od("<image width=\"200\" src=\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550955150042&di=76fd03c52648a8c45433ff58a942c72f&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201601%2F24%2F20160124105056_aZExU.thumb.700_0.jpeg\" \/> ","18px","#444444",NO,4,1,0));
-show(new Od("9。","35px","#444444",NO,6,1,0));
-show(new Od("89。","18px","#444444",ALP,4,0,2));
-show(new Od("856。","18px","#444444",ALP,5,1,0));
-show(new Od("jkkkk。","18px","#444444",ALP,5,0,2));
-show(new Od("4566。","18px","#444444",ALP,5,1,0));
-show(new Od("。。。。。","25px","#444444",ALP,4,1,0));
-show(new Od("。。。","25px","#444444",ALP,4,1,0));
-show(new Od("gh<br \/>787","18px","#444444",NO,6,1,0));
-show(new Od("90。","18px","#000000",ALP,7,1,0));
-show(new Od("3","100px","#000000",NO,4,1,0));
-show(new Od("677","18px","#000000",ALP,6,1,0));
-show(new Od("8!","18px","#000000",ALP,7,2,0));
-show(new Od("7.","25px","#000000",ALP,6,1,0));
-show(new Od("<image width=\"300\" src=\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550955150042&di=76fd03c52648a8c45433ff58a942c72f&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201601%2F24%2F20160124105056_aZExU.thumb.700_0.jpeg\" \/> ","18px","#444444",NO,5,1,0));
-
-show(new Od("45。","18px","#444444",ALP,5,1,0));
-show(new Od("677   ...。","14px","#444444",ALP,4,0,2));
-show(new Od("444。","14px","#444444",ALP,6,1,0));
-
-show(new Od("6888。","18px","#000000",ALP,10,false,3));
-show(new Od("685","40px","#000000",ALP,6,false,0));
-show(new Od("--7:___","13px","#666666",HEI,14,true));
-show(new Od("。。。","25px","#444444",ALP,7,1,0));
-show(new Od("end","65px","#ffaadd",ALP,6,false));
-
-setInterval("update();",12);
-
-		</script>
-
-	</body>
+        <div class="bg-box" id="background">
+            <div class="cut-box">
+                <image class="bg" id="bg" src="image/tip.png"></image>
+            </div>
+            <p id="infor">
+                hhhh
+            </p>
+        </div>
+        <div class="bg-box" id="background-">
+            <div class="cut-box">
+                <image class="bg" id="bg-" src="image/tip.png"></image>
+            </div>
+        </div>
+        <image id="testNet" />
+        <script src="js/a.js"></script>
+        <div id="touch" onmouseover="up_down = true;" onmouseout="up_down = false;">
+        </div>
+    </body>
 </html>
