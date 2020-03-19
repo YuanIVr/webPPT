@@ -15,18 +15,18 @@ function inScience(s) {
 function searchInput() {
     var input = document.getElementById("input");
     var value = input.value;
-    var baidu = "https://www.baidu.com/s?ie=UTF-8&wd=";
+    var baidu = "https://www.bing.com/search?q=";
     var a1;
     try {
         switch (value) {
             case "":
                 a1 = "https://bilibili.com/";
                 break;
-            case "10011":
+            case "github":
                 a1 = "https://github.com/";
                 break;
-            case "4611":
-                a1 = "https://www.runoob.com/";
+            case "w3cschool":
+                a1 = "https://www.w3cschool.cn/";
                 break;
             default:
                 a1 = baidu + inScience(value);
