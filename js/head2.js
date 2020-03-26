@@ -15,7 +15,7 @@ function inScience(s) {
 function searchInput() {
     var input = document.getElementById("input");
     var value = input.value;
-    var baidu = "https://cn.bing.com/search?q=";
+    var baidu = "https://www.baidu.com/s?ie=UTF-8&wd=";
     var a1;
     try {
         switch (value) {
